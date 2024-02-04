@@ -32,7 +32,7 @@ Note that the benchmark metrics are sensitive to process, so please benchmark **
 
 The lower elapsed time is the better.
 
-| Machine      | OS           | Metric    | Elapsed time (ON)                 | Elapsed time (OFF)           | Performance Boost |
+| Machine      | OS           | Metric    | Elapsed time (OFF)                | Elapsed time (ON)            | Performance Boost |
 | ------------ | ------------ | --------- | --------------------------------- | ---------------------------- | ----------------- |
 | NVIDIA DGX-2 | Ubuntu 22.04 | rayon_sum | 5,175,824 ns/iter (+/- 2,767,386) | 250,119 ns/iter (+/- 21,970) | 20.69x            |
 
