@@ -30,6 +30,7 @@ pub fn try_init() -> Result<()> {
 #[cfg_attr(feature = "clap", derive(::clap::Parser))]
 #[cfg_attr(feature = "serde", derive(::serde::Serialize, ::serde::Deserialize))]
 pub struct Sas {
+    /// Runtime system type.
     #[cfg_attr(
         feature = "clap",
         arg(
@@ -39,7 +40,7 @@ pub struct Sas {
             value_name = "TYPE"
         )
     )]
-    system_type: SystemType,
+    pub system_type: SystemType,
 }
 
 impl Sas {
