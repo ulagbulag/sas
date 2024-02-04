@@ -38,10 +38,10 @@ Note that the benchmark metrics are sensitive to process, so please benchmark **
 
 The lower elapsed time is the better.
 
-| Machine             | OS                         | Metric    | Elapsed time (OFF)                | Elapsed time (ON)           | Performance Boost |
-| ------------------- | -------------------------- | --------- | --------------------------------- | --------------------------- | ----------------- |
-| HP Z440 Workstation | Arch Linux (6.7.0-arch3-1) | rayon_sum | 150,826 ns/iter (+/- 61,270)      | 80,341 ns/iter (+/- 6,926)  | 1.88x             |
-| NVIDIA DGX-2        | Ubuntu 22.04               | rayon_sum | 5,175,824 ns/iter (+/- 2,767,386) | 247,236 ns/iter (+/- 6,151) | 20.93x            |
+| Machine             | OS           | Kernel                       | Metric    | Elapsed time (OFF)                | Elapsed time (ON)           | Performance Boost |
+| ------------------- | ------------ | ---------------------------- | --------- | --------------------------------- | --------------------------- | ----------------- |
+| HP Z440 Workstation | Arch Linux   | 6.7.0-arch3-1                | rayon_sum | 150,826 ns/iter (+/- 61,270)      | 80,341 ns/iter (+/- 6,926)  | 1.88x             |
+| NVIDIA DGX-2        | Ubuntu 22.04 | 5.14.0-284.11.1.el9_2.x86_64 | rayon_sum | 5,175,824 ns/iter (+/- 2,767,386) | 247,236 ns/iter (+/- 6,151) | 20.93x            |
 
 ## License
 
