@@ -1,5 +1,7 @@
 # SAS
 
+[![SAS logo](assets/logo.webp)](https://crates.io/crates/sas)
+
 [![SAS crate](https://img.shields.io/crates/v/sas.svg)](https://crates.io/crates/sas)
 [![SAS documentation](https://docs.rs/sas/badge.svg)](https://docs.rs/sas)
 
