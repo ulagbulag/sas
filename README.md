@@ -1,6 +1,6 @@
 # SAS
 
-[![SAS logo](assets/logo.webp)](https://crates.io/crates/sas)
+[![SAS logo](https://raw.githubusercontent.com/ulagbulag/sas/master/assets/logo.webp)](https://crates.io/crates/sas)
 
 [![SAS crate](https://img.shields.io/crates/v/sas.svg)](https://crates.io/crates/sas)
 [![SAS documentation](https://docs.rs/sas/badge.svg)](https://docs.rs/sas)
@@ -12,12 +12,11 @@ SAS (Salty-And-Sweet) is an one-line Rust runtime optimization library.
 ### Simple one-shot mode
 
 ```rust
-use sas::init_once;
-
 fn main() {
-    ::sas::init().expect("SAS not inited");
+    // That's end!
+    sas::init();
 
-    // ...
+    // ... your heavy works
 }
 ```
 
