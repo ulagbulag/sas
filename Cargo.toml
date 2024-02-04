@@ -1,0 +1,70 @@
+###########################
+# Workspace Configuration #
+###########################
+
+[workspace]
+members = ["."]
+resolver = "2"
+
+[workspace.package]
+authors = ["Ho Kim <ho.kim@ulagbulag.io>"]
+description = "Salty-and-Sweet one-line Rust Runtime Performance Optimization Library"
+documentation = "https://docs.rs/sas"
+edition = "2021"
+include = ["src/**/*.rs", "Cargo.toml"]
+keywords = ["concurrency", "optimization", "parallel"]
+license = "MIT OR Apache-2.0"
+readme = "./README.md"
+rust-version = "1.63"
+homepage = "https://github.com/ulagbulag/sas"
+repository = "https://github.com/ulagbulag/sas"
+version = "0.1.0"
+
+[workspace.dependencies]
+anyhow = { version = "1.0", features = ["backtrace"] }
+clap = { version = "4.4", features = ["derive", "env"] }
+hwlocality = { version = "1.0.0-alpha.1" }
+rand = { version = "0.8" }
+rayon = { version = "1.8" }
+serde = { version = "1.0" }
+strum = { version = "0.26" }
+
+#########################
+# Package Configuration #
+#########################
+
+[package]
+name = "sas"
+
+authors = { workspace = true }
+description = { workspace = true }
+documentation = { workspace = true }
+edition = { workspace = true }
+include = { workspace = true }
+keywords = { workspace = true }
+license = { workspace = true }
+readme = { workspace = true }
+rust-version = { workspace = true }
+homepage = { workspace = true }
+repository = { workspace = true }
+version = { workspace = true }
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[features]
+default = ["numa", "rayon"]
+
+numa = ["hwlocality", "rand"]
+clap = ["dep:clap", "strum"]
+
+[dependencies]
+anyhow = { workspace = true }
+clap = { workspace = true, optional = true }
+hwlocality = { workspace = true, optional = true }
+rand = { workspace = true, optional = true }
+rayon = { workspace = true, optional = true }
+serde = { workspace = true, optional = true, features = ["derive"] }
+strum = { workspace = true, optional = true, features = ["derive"] }
+
+[dev-dependencies]
+rayon = { workspace = true }
