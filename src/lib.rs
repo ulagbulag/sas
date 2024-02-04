@@ -142,17 +142,22 @@ fn bind_threads(_: Vec<usize>) -> Result<()> {
 #[cfg(all(feature = "numa", feature = "rayon"))]
 fn bind_threads(threads: Vec<usize>) -> Result<()> {
     use hwlocality::cpu::{binding::CpuBindingFlags, cpuset::CpuSet};
-    use rayon::iter::{IntoParallelIterator, ParallelIterator};
 
-    threads.into_par_iter().try_for_each(|idx| {
-        // bind the given thread into the NUMA node
-        let topology = get_topology()?;
-        let cpus = {
-            let mut res = CpuSet::new();
-            res.set(idx);
-            res
-        };
-        topology.bind_cpu(&cpus, CpuBindingFlags::THREAD)?;
-        Ok(())
-    })
+    ::rayon::scope(|s| {
+        s.spawn_broadcast({
+            move |_, ctx| {
+                // bind the given thread into the NUMA node
+                let topology = get_topology().expect("failed to load topology");
+                let cpus = {
+                    let mut res = CpuSet::new();
+                    res.set(threads[ctx.index()]);
+                    res
+                };
+                topology
+                    .bind_cpu(&cpus, CpuBindingFlags::THREAD)
+                    .expect("failed to bind the rayon thread into CPU");
+            }
+        });
+    });
+    Ok(())
 }
