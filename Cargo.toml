@@ -18,7 +18,7 @@ readme = "./README.md"
 rust-version = "1.63"
 homepage = "https://github.com/ulagbulag/sas"
 repository = "https://github.com/ulagbulag/sas"
-version = "0.1.1"
+version = "0.1.2"
 
 [workspace.dependencies]
 anyhow = { version = "1.0", features = ["backtrace"] }
