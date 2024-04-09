@@ -7,6 +7,12 @@
 
 SAS (Salty-And-Sweet) is an one-line Rust runtime optimization library.
 
+## Features
+
+- NUMA-aware [`rayon`](https://docs.rs/rayon): `numa` feature should be enabled
+  - If you have 1 NUMA nodes, you can experience about 20% performance improvements if the tasks are completed at approximately equal times.
+  - If you have 2+ NUMA nodes, you can experience extreme performance improvements.
+
 ## Install
 
 ### Simple one-shot mode
@@ -32,9 +38,9 @@ Note that the benchmark metrics are sensitive to process, so please benchmark **
 
 The lower elapsed time is the better.
 
-| Machine      | OS           | Metric    | Elapsed time (OFF)                | Elapsed time (ON)           | Performance Boost |
-| ------------ | ------------ | --------- | --------------------------------- | --------------------------- | ----------------- |
-| NVIDIA DGX-2 | Ubuntu 22.04 | rayon_sum | 5,175,824 ns/iter (+/- 2,767,386) | 247,236 ns/iter (+/- 6,151) | 20.93x            |
+| Machine      | OS (in Docker) | Kernel                       | Metric    | Elapsed time (OFF)                | Elapsed time (ON)           | Performance Boost |
+| ------------ | -------------- | ---------------------------- | --------- | --------------------------------- | --------------------------- | ----------------- |
+| NVIDIA DGX-2 | Ubuntu 22.04   | 5.14.0-284.11.1.el9_2.x86_64 | rayon_sum | 5,175,824 ns/iter (+/- 2,767,386) | 247,236 ns/iter (+/- 6,151) | 20.93x            |
 
 ## License
 

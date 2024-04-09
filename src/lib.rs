@@ -59,7 +59,7 @@ impl Sas {
         {
             use rayon::ThreadPoolBuilder;
 
-            let threads = prepare_threads()?;
+            let (has_multiple_numa_nodes, threads) = prepare_threads()?;
 
             let mut builder = ThreadPoolBuilder::new().num_threads(threads.len());
             if matches!(self.system_type, SystemType::Python) {
@@ -67,7 +67,9 @@ impl Sas {
             }
             builder.build_global()?;
 
-            bind_threads(threads)?;
+            if has_multiple_numa_nodes {
+                bind_threads(threads)?;
+            }
         }
 
         Ok(())
@@ -94,17 +96,17 @@ fn get_topology() -> Result<::hwlocality::Topology> {
 }
 
 #[cfg(all(not(feature = "numa"), feature = "rayon"))]
-fn prepare_threads() -> Result<Vec<usize>> {
+fn prepare_threads() -> Result<(bool, Vec<usize>)> {
     use std::thread;
 
     let num_threads = thread::available_parallelism()
         .map(usize::from)
         .unwrap_or(1);
-    Ok((0..num_threads).collect())
+    Ok((false, (0..num_threads).collect()))
 }
 
 #[cfg(all(feature = "numa", feature = "rayon"))]
-fn prepare_threads() -> Result<Vec<usize>> {
+fn prepare_threads() -> Result<(bool, Vec<usize>)> {
     use rand::{
         distributions::{Distribution, Uniform},
         thread_rng,
@@ -130,7 +132,8 @@ fn prepare_threads() -> Result<Vec<usize>> {
     // get all the CPUs in the NUMA node
     let cpu_begin = numa_node * num_threads_per_cpu;
     let cpu_end = cpu_begin + num_threads_per_cpu;
-    Ok((cpu_begin..cpu_end).collect())
+    let cpus = (cpu_begin..cpu_end).collect();
+    Ok((num_numa_nodes > 1, cpus))
 }
 
 #[cfg(all(not(feature = "numa"), feature = "rayon"))]
