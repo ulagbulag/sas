@@ -5,14 +5,14 @@ extern crate test;
 use rayon::iter::{IntoParallelIterator, ParallelIterator};
 use test::Bencher;
 
+type NumIter = usize;
+
+const NUM_ITERATIONS: NumIter = 1_000_000;
+
 /// A sample multi-threaded function.
 fn execute() {
-    type NumIter = usize;
-
-    let num_iterations: NumIter = 1_000_000_000;
-
-    let expected = num_iterations;
-    let given: NumIter = (0..num_iterations).into_par_iter().map(|_| 1usize).sum();
+    let expected = NUM_ITERATIONS * (NUM_ITERATIONS - 1) / 2;
+    let given: NumIter = (0..NUM_ITERATIONS).into_par_iter().sum();
     assert_eq!(expected, given);
 }
 
